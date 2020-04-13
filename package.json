@@ -52,11 +52,7 @@
     "map-sass": "node-sass src/assets/scss/material-kit-react.scss src/assets/css/material-kit-react.css --source-map true"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": []
   }
 }
