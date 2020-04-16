@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import NavPills from "components/NavPills/NavPills.js";
-import axios from "axios";
 
 import CreateWorldData from "components/CustomComponents/CreateWorldData";
 

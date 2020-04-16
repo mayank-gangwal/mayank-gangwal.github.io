@@ -14,7 +14,7 @@ const cardHeaderStyle = {
     marginTop: "-30px",
     border: "0",
     marginBottom: "0",
-    fontSize: "50px",
+    fontSize: "30px",
     fontWeight: "bolder"
   },
   cardHeaderPlain: {
