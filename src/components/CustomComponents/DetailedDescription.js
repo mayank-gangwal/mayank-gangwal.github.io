@@ -3,6 +3,7 @@ import React from "react";
 import NavPills from "components/NavPills/NavPills.js";
 
 import CreateWorldData from "components/CustomComponents/CreateWorldData";
+import CreateIndianStateData from "components/CustomComponents/CreateIndianStateData";
 
 export default function DetailedDescription() {
   return (
@@ -11,11 +12,7 @@ export default function DetailedDescription() {
       tabs={[
         {
           tabButton: "Indian States",
-          tabContent: (
-            <span>
-              <p>coming soon...</p>
-            </span>
-          )
+          tabContent: <CreateIndianStateData />
         },
         {
           tabButton: "World",
