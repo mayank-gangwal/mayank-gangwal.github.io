@@ -75,7 +75,7 @@ export default function CreateIndianStateData() {
         .then(res => {
           setValue(res.data);
         });
-    }, 2000); // API call after 3 sec because rapidAPI doesn't allow more than 1 call within a sec
+    }, 3000); // API call after 3 sec because rapidAPI doesn't allow more than 1 call within a sec
   }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
 
   return (
