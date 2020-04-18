@@ -5,21 +5,12 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
+import Badge from "@material-ui/core/Badge";
+import Warning from "components/Typography/Warning.js";
+
 import { makeStyles } from "@material-ui/core/styles";
 
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
 import { cardTitle } from "assets/jss/material-kit-react.js";
-
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -34,16 +25,19 @@ import stylesComp from "assets/jss/material-kit-react/views/components.js";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    width: "100%"
+    width: "100%",
+    "& > *": {
+      margin: theme.spacing(1)
+    }
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     flexBasis: "33.33%",
-    flexShrink: 0
+    flexShrink: 0,
+    color: "#00acc1"
   },
   secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary
+    fontSize: theme.typography.pxToRem(15)
   },
   paper: {
     padding: theme.spacing(2),
@@ -54,21 +48,6 @@ const useStyles = makeStyles(theme => ({
   ...stylesComp,
   cardTitle
 }));
-
-function createData(district, confirmed_cases) {
-  return {
-    district,
-    confirmed_cases
-  };
-}
-
-let rows = [
-  //   createData("Frozen yoghurt", 159),
-  //   createData("Ice cream sandwich", 237),
-  //   createData("Eclair", 262),
-  //   createData("Cupcake", 305),
-  //   createData("Gingerbread", 356)
-];
 
 export default function CreateIndianStateData() {
   const classes = useStyles();
@@ -98,22 +77,6 @@ export default function CreateIndianStateData() {
         });
     }, 2000); // API call after 3 sec because rapidAPI doesn't allow more than 1 call within a sec
   }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
-
-  //   useEffect(
-  //     () => {
-  //       if (value && value.state_wise) {
-  //         rows = [
-  //           createData(
-  //             value.state_wise.Maharashtra.district.Pune,
-  //             value.state_wise.Maharashtra.district.Pune.confirmed
-  //           )
-  //         ];
-  //       }
-
-  //       console.log("in here ---> " + value);
-  //     },
-  //     [value]
-  //   );
 
   return (
     <React.Fragment>
@@ -194,43 +157,74 @@ export default function CreateIndianStateData() {
                     <Typography className={classes.heading}>
                       {record}
                     </Typography>
-                    <Typography className={classes.secondaryHeading}>
-                      Total confirmed: {value.state_wise[record].confirmed}
-                    </Typography>
+                    <Button className={classes.secondaryHeading}>
+                      Confirmed: {value.state_wise[record].confirmed}
+                    </Button>
+                    <Button
+                      color="primary"
+                      className={classes.secondaryHeading}
+                    >
+                      Recovered: {value.state_wise[record].recovered}
+                    </Button>
+                    <Button
+                      color="secondary"
+                      className={classes.secondaryHeading}
+                    >
+                      Deaths: {value.state_wise[record].deaths}
+                    </Button>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <Grid container spacing={4}>
                       <Grid item xs={3}>
+                        <Paper className={classes.paper}>
+                          <Warning>{record} summary</Warning>
+                        </Paper>
                         <Paper
                           className={classes.paper}
-                          style={{ textAlign: "left" }}
+                          style={{ textAlign: "left", color: "#3f51b5" }}
                         >
-                          Active: {value.state_wise[record].active}
-                          <br />
-                          Confirmed: {value.state_wise[record].confirmed} <br />
-                          Deaths: {value.state_wise[record].deaths} <br />
-                          New cases: {
-                            value.state_wise[record].deltaconfirmed
-                          }{" "}
-                          <br />
-                          New deaths: {
-                            value.state_wise[record].deltadeaths
-                          }{" "}
-                          <br />
-                          New recovered:{" "}
-                          {value.state_wise[record].deltarecovered} <br />
-                          Total recovered: {
-                            value.state_wise[record].recovered
-                          }{" "}
-                          <br />
-                          Last updated:{" "}
-                          {value.state_wise[record].lastupdatedtime}
+                          <h4>
+                            Active cases:
+                            <small>{value.state_wise[record].active}</small>
+                          </h4>
+                          <h4>
+                            New cases:{" "}
+                            <small>
+                              {value.state_wise[record].deltaconfirmed}
+                            </small>
+                          </h4>
+                          <h4>
+                            New deaths:{" "}
+                            <small>
+                              {value.state_wise[record].deltadeaths}
+                            </small>
+                          </h4>
+                          <h4>
+                            New recovered{" "}
+                            <small>
+                              {value.state_wise[record].deltarecovered}
+                            </small>
+                          </h4>
+                          <h5>
+                            {" "}
+                            Last updated:{" "}
+                            <small>
+                              {value.state_wise[record].lastupdatedtime}{" "}
+                            </small>{" "}
+                          </h5>
                         </Paper>
                       </Grid>
 
-                      {/* ============== table starts =============== */}
+                      {/* ============== district info starts =============== */}
 
                       <Grid item xs={9}>
+                        <Paper className={classes.paper}>
+                          <Warning>
+                            Number of cases confirmed - District wise
+                            bifurcation
+                          </Warning>
+                        </Paper>
+
                         <Paper className={classes.paper}>
                           {value &&
                             value.state_wise &&
@@ -239,17 +233,27 @@ export default function CreateIndianStateData() {
                             Object.keys(
                               value.state_wise[record].district
                             ).map(district_wise => {
-                              console.log("in here ---> " + { district_wise });
                               return (
-                                <span key={district_wise}>
-                                  <Button>
-                                    {district_wise} :{" "}
-                                    {
+                                <span
+                                  key={district_wise}
+                                  style={{
+                                    margin: "10px",
+                                    display: "inline-block"
+                                  }}
+                                >
+                                  <Badge
+                                    max={9999}
+                                    badgeContent={
                                       value.state_wise[record].district[
                                         district_wise
                                       ].confirmed
                                     }
-                                  </Button>
+                                    color="primary"
+                                  >
+                                    <Button variant="outlined" color="primary">
+                                      {district_wise}
+                                    </Button>
+                                  </Badge>
                                 </span>
                               );
                             })}
@@ -257,58 +261,13 @@ export default function CreateIndianStateData() {
                       </Grid>
                     </Grid>
 
-                    {/* ============== table ends =============== */}
+                    {/* ============== district info ends =============== */}
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               </div>
             </div>
           );
         })}
-
-      {/* <div className={classes.root}>
-        <ExpansionPanel
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
-        >
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography className={classes.heading}>
-              General settings
-            </Typography>
-            <Typography className={classes.secondaryHeading}>
-              I am an expansion panel
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-              feugiat. Aliquam eget maximus est, id dignissim quam.
-            </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </div> */}
-
-      {/* <TableContainer component={Paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>District</TableCell>
-              <TableCell align="right">Confirmed Cases</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => <TableRow key={row.district}>
-                <TableCell component="th" scope="row">
-                  {row.district}
-                </TableCell>
-                <TableCell align="right">{row.confirmed_cases}</TableCell>
-              </TableRow>)}
-          </TableBody>
-        </Table>
-      </TableContainer> */}
       {/* ============ accordian ends here =============== */}
     </React.Fragment>
   );
