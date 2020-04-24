@@ -2,7 +2,7 @@ import React from "react";
 
 import HomeIcon from "@material-ui/icons/Home";
 
-import IndiaSumary from "components/CustomComponents/IndiaSummary.js";
+import IndiaSummary from "components/CustomComponents/IndiaSummary.js";
 import DetailedDescription from "components/CustomComponents/DetailedDescription.js";
 
 import { cardTitle } from "assets/jss/material-kit-react.js";
@@ -57,7 +57,7 @@ export default function Components(props) {
         </div>
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <IndiaSumary />
+        <IndiaSummary />
       </div>
 
       <div style={{ padding: "50px" }} className={classNames(classes.main)}>

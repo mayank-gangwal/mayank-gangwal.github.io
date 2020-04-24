@@ -17,6 +17,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import imagesStyles from "assets/jss/material-kit-react/imagesStyles.js";
 import stylesComp from "assets/jss/material-kit-react/views/components.js";
 
+import { Environment } from "../../config.js";
+
 const styles = {
   ...imagesStyles,
   ...stylesComp,
@@ -31,16 +33,11 @@ export default function IndiaSummary(props) {
   const [value, setValue] = useState([]);
 
   useEffect(() => {
-    let config = {
-      headers: {
-        "x-rapidapi-host": "corona-virus-world-and-india-data.p.rapidapi.com",
-        "x-rapidapi-key": "36584a6d73msh64de65f76aa6f01p10cddajsnbedfe6459110"
-      }
-    };
+    const headers = Environment.apiConfig;
     axios
       .get(
         `https://corona-virus-world-and-india-data.p.rapidapi.com/api_india_timeline`,
-        config
+        headers
       )
       .then(res => {
         setValue(JSON.stringify(res.data.pop())); //needed to stringify object before setting value.

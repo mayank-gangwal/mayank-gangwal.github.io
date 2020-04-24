@@ -11,6 +11,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
 import { cardTitle } from "assets/jss/material-kit-react.js";
 
+import { Environment } from "../../config.js";
+
 import Muted from "components/Typography/Muted.js";
 import Typography from "@material-ui/core/Typography";
 
@@ -44,10 +46,11 @@ export default function CreateWorldData() {
       }
     };
     setTimeout(function() {
+      const headers = Environment.apiConfig;
       axios
         .get(
           `https://corona-virus-world-and-india-data.p.rapidapi.com/api`,
-          config
+          headers
         )
         .then(res => {
           setValue(res.data);
