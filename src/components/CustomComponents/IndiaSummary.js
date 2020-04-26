@@ -7,6 +7,7 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Graph from "components/CustomComponents/Graph.js";
 
 import { cardTitle } from "assets/jss/material-kit-react.js";
 
@@ -31,6 +32,7 @@ export default function IndiaSummary(props) {
   const classes = useStyles();
 
   const [value, setValue] = useState([]);
+  const [graphValue, setGraphValue] = useState([]);
 
   useEffect(() => {
     const headers = Environment.apiConfig;
@@ -40,6 +42,7 @@ export default function IndiaSummary(props) {
         headers
       )
       .then(res => {
+        setGraphValue(JSON.stringify(res.data));
         setValue(JSON.stringify(res.data.pop())); //needed to stringify object before setting value.
       });
   }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
@@ -108,7 +111,8 @@ export default function IndiaSummary(props) {
           </Grid>
           <Grid item xs={9}>
             <Paper style={{ padding: "35px" }} className={classes.paper}>
-              ...upcoming graphs here
+              {graphValue &&
+                graphValue.length > 1 && <Graph data={graphValue} />}
             </Paper>
           </Grid>
         </Grid>
